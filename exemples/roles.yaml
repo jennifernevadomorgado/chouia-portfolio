@@ -1,0 +1,29 @@
+# Configuration des rôles (exemple simplifié pour le portfolio)
+# Changer un modèle, un prompt ou une source se fait ici, sans toucher au code.
+
+glpi:
+  ecriture_activee: false        # interrupteur : rien n'est écrit dans GLPI sans accord
+
+tests_live:
+  filtre_actif: true             # pendant les tests : seulement les tickets "[TEST CHATBOT]"
+  comptes_autorises: []          # rempli sur le serveur, jamais dans Git
+
+limites:
+  messages_par_minute: 10
+  reponses_simultanees: 3
+
+roles:
+  role1_nouveaux_tickets:
+    actif: true
+    declencheur: webhook
+    redaction: python            # étapes validées uniquement, le modèle n'écrit rien
+  role2_utilisateur:
+    actif: true
+    langues: [fr, nl]
+    sources: [parcours_valides, manuels, documents_utilisateurs, internet_officiel]
+    creation_ticket: avec_accord
+  role3_technicien:
+    actif: true
+    langues: [fr]                # + traduction NL de la réponse du technicien
+    sources: [anciens_tickets, manuels, documents_internes, internet_officiel, forums]
+    modifie_ticket: false
